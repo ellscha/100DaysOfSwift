@@ -265,3 +265,114 @@ case 50..<85:
 default:
     print("You did great!")
 }
+
+
+/// Loops!
+
+/// For loops go item by item in an array or range of numbers where you can do something `for` each value in one code block!
+
+let ageRange = 15...21
+
+for age in ageRange {
+    var ageString = "You just turned \(age) which means a lot of new opportunities! Make sure you"
+    switch age {
+        case 21:
+        ageString += " always drink responsibly."
+        fallthrough
+    case 18,19,20:
+       ageString += " While you're at it, head over to the polls and vote!"
+       fallthrough
+    case 16, 17:
+        ageString += " Drive safe! "
+    default:
+        print("No fun things to do yet!")
+    }
+    print(ageString)
+    
+}
+
+/// Let's say you don't care about the small details and you just want to do something x amount of times
+age = 15
+var birthdayString = "I will put, in my birthday cake a candle."
+
+for _ in 1..<age {
+    birthdayString += " And another candle."
+}
+birthdayString += " And one more for good luck!"
+
+/// Another type of loop is a while loop. _While something satisfies a certain condition execute the follow._
+
+var daysUntilMyNextBirthday = 0
+
+//Assuming not a leap ear.
+while daysUntilMyNextBirthday < 365 {
+    //1 day less to go!
+    daysUntilMyNextBirthday += 1
+}
+if daysUntilMyNextBirthday == 365 {
+    print("it must be my birthday!")
+}
+// Okay that was an extreme example... but 🤷‍♀️
+// Another way to do the while loop is called a repeat loop where the code inside the bllock will alwas be executed at least once ( it is executed prior to the while condition being checked.
+
+repeat {
+    print("This is false")
+} while false
+
+/// Even though you are looking for a condition that is false in this case, while must always be a true evaluation to execute.
+/// There might even be a time where you want to exit the loop prior to the loop reaching an end. e.g you are waiting until you pick an ace of spades from a deck.
+
+//Let's say that card #43 is the ace of spades.
+
+let deck = 1...52
+
+for i in deck {
+    //Still looking for ace of spades.
+    if i == 43 {
+        break
+        // The break keyword will _break_ out of the loop no questions asked.
+    }
+}
+
+
+// SO COOL I DID NOT KNOW YOU COULD NAME YOUR LOOPS!!!!! (AND THNE BREAK OUT OF THEM ACCORDINGLY!)
+
+/// Again using the example from 100 Days of Swift:
+
+outerLoop: for i in 1...10 {
+    for j in 1...10 {
+        let product = i * j
+        print ("\(i) * \(j) is \(product)")
+
+        if product == 50 {
+            print("It's a bullseye!")
+            break outerLoop
+        }
+    }
+}
+
+/// Let's go back to the cards example. Let's say you don't want to exit out of the loop, you just want to keep going...
+
+for i in deck {
+    //Still looking for ace of spades.
+    if i == 43 || i == 12 {
+        print("found your card.")
+        continue
+        // The continue keyword will _continue_ through the loop.
+    }
+}
+
+
+/// Infinite loops are a _DANGER ZONE_! if you were to write while true.... the loop would go on forever....And again taking from 100 Days of Swift
+var counter = 0
+
+while true {
+    print(" ")
+    counter += 1
+
+    if counter == 273 {
+        break
+    }
+}
+
+/// Here is one way to utilize an infinite loop without letting it destroy your progress.
