@@ -376,3 +376,101 @@ while true {
 }
 
 /// Here is one way to utilize an infinite loop without letting it destroy your progress.
+
+/// ##Functions!
+/// We use functions to simplify, organize and utilize out code to the max!
+/// Functions make it easy to reuse code which makes code very readable (in most cases but I'm sure there is some rando outlier).
+/// We have already been using a function called print. it is a system function and it is _called_ many times throughout this file.
+/// Functions can take parameters and can also output values. I'm going to skip ahead a bit and use parameters for now. If anyone is actually reading this, and wants me to review, let me know.
+
+// Let's write out own print function! (it will take a parameter and will have no output value (a function with no output is called a void function!)
+func printGiven(string: String) {
+    print(string)
+}
+
+printGiven(string: "FUNC YEAH!")
+
+// We can write low level math functions the same way and we can give an output value. And we can call functions inside of functions! (I'll take some more examples that are very smart and well written from 100 days of swift!
+
+func square(number: Int) -> Int {
+    var result = number * number
+    printGiven(string: "\(number) squared is \(result)")
+    return result
+}
+
+square(number: 4)
+
+/// You can give a parameter more than one name which helps with readability.
+
+func sayHello(to name:String) {
+    print("Hello, \(name)")
+}
+
+sayHello(to: "Taylor")
+
+/// That makes a world of difference when reading code and understanding it. So, with the function print, (which doesnt have a parameter name but still takes a parameter (the thing you print)). That is done with an underscore. "Say hello to" is a great function because it reads like a sentence! Print (the system one, not my silly example) is great as well! always better to provide more detail in my opinion so I don't know if I've ever used the following in practice.
+
+func greet(_ person:String) {
+    print("Hello, \(person)")
+}
+
+greet("Tom")
+
+/// With parameters, you might not always have a value at the time of calling a function...Enter _Default Parameters_!!! 🥳
+
+func introducePeople(to firstName: String, lastName: String = "") -> String {
+    let introduction = "Everyone, meet \(firstName) \(lastName)"
+    return introduction
+    // we could have just written this instead of 'let license' just writing return and then the string.
+}
+
+introducePeople(to: "Cher")
+introducePeople(to: "James", lastName: "Bond")
+
+/// I DID NOT KNOW ABOUT VARIADIC FUNCTIONS, LET'S EXPLORE THEM TOGETHER NOW!
+/// I knew that I could print multiple things as a comma separated list print(firstName, lastName) e.g
+/// I didn't know that has a special name: _variadic_
+/// You can make any parameter variadic by adding an ellipses (...) after the Type.
+
+func writeSongs(about topics: String...) {
+    for topic in topics {
+        print("""
+                La La La
+                \(topic) is cool!
+                Yeah!
+              """)
+    }
+}
+
+/// If everything always went to plan, that would be _Sweet_, but alas.... We can _throw_ errors in functions to try and _catch_ these errors. I'll once again borrow the example for 100 days of swift.
+
+enum PasswordError: Error {
+    case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool {
+    if password == "password" {
+        throw PasswordError.obvious
+    }
+
+    return true
+}
+
+/// Throw functions are not able to be called unintentionally, they require the keywords: _do_, _try_, and _catch_
+/// You DO _run a block of code that could result in an error_ TRY _the function that throws and see what happens_ and lastly CATCH _the error if it occurs, so it doesn't ruin your program_
+do {
+    try checkPassword("password")
+    print("That password is good!")
+} catch {
+    print("You can't use that password.")
+}
+
+/// _inout_ is a type of parameter that is changed in place rather than setting something equal to the value of a function's return.... when we call the function we use the ampersand to indicate that it is an inout parameter
+
+var number = 100
+func makeZero(number: inout Int) {
+    number *= 0
+}
+
+makeZero(number: &number)
+
