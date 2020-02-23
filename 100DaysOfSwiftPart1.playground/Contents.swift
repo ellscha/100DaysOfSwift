@@ -177,6 +177,7 @@ tournamentStandings.gold.rawValue == GameStatus.loss.rawValue
 
 var trueStory = 1 < 2
 
+
 /// CONDITIONALS
 /// I like all of the examples used in 100 Days of Swift, but I particularly like the examples used in this segment.
 
@@ -266,9 +267,8 @@ default:
     print("You did great!")
 }
 
-
+/// #Day 4
 /// Loops!
-
 /// For loops go item by item in an array or range of numbers where you can do something `for` each value in one code block!
 
 let ageRange = 15...21
@@ -377,6 +377,7 @@ while true {
 
 /// Here is one way to utilize an infinite loop without letting it destroy your progress.
 
+/// #Day 5
 /// ##Functions!
 /// We use functions to simplify, organize and utilize out code to the max!
 /// Functions make it easy to reuse code which makes code very readable (in most cases but I'm sure there is some rando outlier).
@@ -474,6 +475,7 @@ func makeZero(number: inout Int) {
 
 makeZero(number: &number)
 
+/// #Day 6 & 7
 /// Next up: Closures, closures are super important in iOS development wayyyyy later on when dealing with threading and timing and
 /// Long story short, very very important. I never learned them properly so I'm definitely glad that 100 Days of swift dedicates
 /// a couple of lessons to them.
