@@ -384,17 +384,17 @@ while true {
 /// Functions can take parameters and can also output values. I'm going to skip ahead a bit and use parameters for now. If anyone is actually reading this, and wants me to review, let me know.
 
 // Let's write out own print function! (it will take a parameter and will have no output value (a function with no output is called a void function!)
-func printGiven(string: String) {
+func otherPrint(string: String) {
     print(string)
 }
 
-printGiven(string: "FUNC YEAH!")
+otherPrint(string: "FUNC YEAH!")
 
 // We can write low level math functions the same way and we can give an output value. And we can call functions inside of functions! (I'll take some more examples that are very smart and well written from 100 days of swift!
 
 func square(number: Int) -> Int {
     var result = number * number
-    printGiven(string: "\(number) squared is \(result)")
+    otherPrint(string: "\(number) squared is \(result)")
     return result
 }
 
@@ -474,3 +474,155 @@ func makeZero(number: inout Int) {
 
 makeZero(number: &number)
 
+/// Next up: Closures, closures are super important in iOS development wayyyyy later on when dealing with threading and timing and
+/// Long story short, very very important. I never learned them properly so I'm definitely glad that 100 Days of swift dedicates
+/// a couple of lessons to them.
+
+/// Closures... basically a variable that has a value of a function. var or let declaration, name of variable and then `{code}`
+let closure = {
+    print("Learning about closures!")
+}
+
+/// Then when we want to call `closure ` we do like we would any other function
+
+closure()
+/// Up above, our variable number has the type `Int` here, `closure` has type `() -> ()` in other words, a function that takes no parameters and returns nothing.
+
+/// Just like functions, closures can take parameters as well. `↓`
+
+var watchingTV = { (streamingService: String) in
+    print("Watching TV using \(streamingService)")
+}
+
+/// The `in` keyword let's Swift know that the code for the closure is starting.
+
+watchingTV("Netflix")
+
+/// Notice closures don't need parameter names when being called.
+
+/// They can also return values!
+
+/// in goes where the `{` would go.
+let watchingTVWithReturnVal = { (streamingService: String) -> String in
+    return "Watching TV using \(streamingService)"
+}
+
+let watchingNetflix = watchingTVWithReturnVal("Netflix")
+print(watchingNetflix)
+
+/// Now we get meta with it, closures can be used as parameters.
+
+func learning (topicToLearn: () -> Void) {
+    print("What am I going to learn today?")
+    topicToLearn()
+    print("I learned something!")
+}
+
+learning(topicToLearn: closure)
+
+/// Swift has great auto complete abilities (because of XCode) but while typing in `learning` I had two options, one the way I did above, and the other the following is called trailing closure syntax.
+/// ` learning { code }`
+/// That would be useful if we didn't have the function closure written...
+
+learning() {
+    print("Learning about closures!")
+}
+
+/// Also could written as
+
+learning {
+    print("Learning about closures!")
+}
+
+/// Buckle up, things are about to get wild. 👩‍🌾
+/// We write `() -> Void` but what we mean is returns void, the `()` can be used as we need.
+
+func watchTV(streamingService: (String) -> Void) {
+    print("What shall I watch today?")
+    streamingService("Netflix")
+    print("TOO MANY OPTIONS!!")
+}
+
+watchTV { (streamingService: String) in
+    print("I will stream using \(streamingService)")
+}
+
+/// Now let's try using a closure as a parameter when it returns a value!
+
+func streamTv(streamingService: (String) -> String) {
+    print("What shall I watch today?")
+    let chosenService = streamingService("Netflix")
+    print(chosenService)
+    print("TOO MANY OPTIONS!!")
+}
+
+
+streamTv { (streamingService: String) -> String in
+    return "I will stream using \(streamingService)"
+}
+
+/// Swift is really smart though because it knows all of the types because...remember... its a type-safe language. This allows us to be less explicit with types when using closures which sometimes helps with readability (It starts to get cluttered with the arrows and the collors and the chunk... soooo the previous code can actually be written aaaaaas
+
+streamTv { streamingService in
+    return "I will stream using \(streamingService)"
+}
+
+/// In other words, use whatever string is provided `in` this return...BUT WAIT! Swift doesn't even require the `return` keyword because it is the only line of code so it _must_ be the line of code that returns, so we could just write it like the following
+
+streamTv { streamingService in
+    "I will stream using \(streamingService)"
+}
+
+/// AND THEN STILL we can simplify. instead of writing `streamingService` swift knows that whatever is passed in will be used as a variable so you can just write:
+
+
+streamTv {
+    "I will stream using \($0)"
+}
+
+/// Parameters in closures like above are named with `$` and then a number starting with 0 and incrementing upwards for the sequential parameters if using more than one....great segue!
+/// Closures with more than one parameter:
+
+func streamTelevision(streamingService: (String, Int) -> String) {
+    print("What shall I watch today?")
+     let chosenService = streamingService("Netflix", 30)
+     print(chosenService)
+     print("TOO MANY OPTIONS!!")
+}
+
+/// So now we call streamTelevision... but don't forget trailing closure syntax...  `()` are not needed.
+
+streamTelevision {
+    " I will stream using \($0) but only for \($1) minutes"
+}
+
+/// We can use closures as parameter types...why not use them as return types as well!
+
+func streamShows() -> (String) -> Void {
+    return {
+        print("I'm using \($0)")
+    }
+}
+
+/// Both of the following are technically _okay_ ways to call `streamShows`, but  the _Hulu_ example's way is not recommended.
+
+let streamingNetflix = streamShows()
+streamingNetflix("Netflix")
+let streamingHulu = streamShows()("Hulu")
+
+/// We can also store variables that are accessible within the scope of the closure/While the function is called. _closure capturing_ is the name for this. (capturing a value inside of a closure)
+/// Let's look back at `streamShows` and `streamingNetflix`
+
+func tvStreaming() -> (String) -> Void {
+    var counter = 1
+    
+    return {
+        print("\(counter). I'm watching on \($0)!")
+        counter += 1
+    }
+}
+
+let usingNetflix = tvStreaming()
+usingNetflix("Netflix")
+usingNetflix("Netflix")
+usingNetflix("Netflix")
