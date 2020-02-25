@@ -433,5 +433,77 @@ func username(for id: Int) -> String? {
 
 let newUser = username(for: 15) ?? "Anonymous"
 
-/// We have seen `.` notation for calling methods and properties. If something that 
+/// We have seen `.` notation for calling methods and properties. If I had a `String?` that I wanted to capitalize, I would have to call
 
+
+let python = pythons.first?.uppercased()
+/// if there is no first value python will have value `nil` and nothing will get uppercased.
+
+/// The next topic relates to the `try` keyword. There are two alternatives to `try`... `try?` and `try!`. In the example I used last time (that I took from the 100 Days of Swift) was what I am about to paste in below.
+enum PasswordError: Error {
+    case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool {
+    if password == "password" {
+        throw PasswordError.obvious
+    }
+
+    return true
+}
+
+do {
+    try checkPassword("password")
+    print("That password is good!")
+} catch {
+    print("You can't use that password.")
+}
+
+/// `try?` makes it so that if there is an error, the value will just return `nil` otherwise the value will come back as an Optional.
+
+if let result = try? checkPassword("password") {
+    print("Result was \(result)")
+} else {
+    print("🤷‍♀️")
+}
+
+/// `try!` is used when you know you won't have an error (`!` mean you better be sure!).
+
+try! checkPassword("sekrit")
+print("OK!")
+
+/// PENULTIMATE TOPIC!! _Faliable initializers_ we've seen init written `init()`, now let's try `init?()`. The second way allows the struct or class initializer to return nil ... as to say... this didn't turn out how I wanted, so let's not even bother.
+
+struct Voter {
+    var age: Int
+    
+    init?(age: Int) {
+        if age >= 18 {
+            self.age = age
+            print("YAY GO VOTE!")
+        } else {
+            return nil
+        }
+    }
+}
+
+/// LAST ONE: We saw casting earlier when we changed "5" (a String) into an Int `Int("5")`
+
+class Profession {}
+
+class Lawyer: Profession {}
+
+class Doctor: Profession {
+    func giveGoodNews() {
+        print("CONGRATULATIONS! You're healthy!")
+    }
+}
+
+// The following array uses type inference to type `professionals` as `Profession`
+let professionals = [Doctor(), Lawyer(), Lawyer(), Doctor()]
+
+for professional in professionals {
+    if let doctor = professional as? Doctor {
+        doctor.giveGoodNews()
+    }
+}
