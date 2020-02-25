@@ -365,4 +365,32 @@ extension HasVacation {
     }
 }
 
-/// #Day 12: Optionals
+/// #Day 12: Optionals (Not an optional topic).
+/// Final of the fundamentals in 100 Days of Swift!
+/// We did it!
+/// Optionals help us deal with information we don't yet know. When you meet someone....if you don't know their name... You don't question whether or not they have one, the only thing you know is that you don't _yet_ know their name. Their name is just...empty to you. In Swift, that empty equivalent is called `nil` also known as null in other languages but in Swift `nil`. When creating a variable that could be nil (just as name is in the example we just walked through), we can make what is called an optional. With name, we are going to make a variabe that has type String optional, meaning it could be a string or it could be nil. It looks like this.
+
+
+var name: String? = nil
+
+/// By adding the `?` to `String` we are basically saying the variable name can take on the properties of the `String` type and employ methods like `count` or `uppercased()` *AND* it can take on the properties of nil....empty space... which has no properties and no methods.
+
+print(name)
+
+name = "Ed"
+
+print(name)
+
+/// When we print name the second time it comes out `Optional("Ed")`.
+/// If we want to create a label and we want it to display the name variable, we _don't_ want the label to say Optional. We need to _unwrap_ the variable. Unwrapping an Optional is important and very often the cause of a warning symbol in the XCode environment showing up.
+/// Swift is a type-safe language, this shouldn't be news at this point. As a type safe language, Swift doesn't want you to be able to accidentally call `nil.count` because that'll cause an error and crash your application. You have to be SO confident, and SO sure that you won't crash your application... This is when we unwrap the optional.
+
+/// There are multiple ways to unwrap optionals. We will begin with `if let` here is how it looks.
+
+if let unwrappedName = name {
+    print(unwrappedName.uppercased())
+} else {
+    print("name is nil and unable to be unwrapped.")
+}
+
+/// You can think of it as an if statement where if a condition is satisfied do x else do y _in conjunction with_ 
