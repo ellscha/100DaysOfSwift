@@ -13,7 +13,7 @@ struct Person0 {
     var firstName: String
 }
 
-/// Now we can use the Person struct type we just created to set the value of a variable.
+/// Now we can use the Person struct type we just created to set the value of a variable. Use `.` notation to access properties and methods.
 
 var elton = Person0(firstName: "Elton")
 print(elton.firstName)
@@ -393,4 +393,45 @@ if let unwrappedName = name {
     print("name is nil and unable to be unwrapped.")
 }
 
-/// You can think of it as an if statement where if a condition is satisfied do x else do y _in conjunction with_ 
+/// You can think of it as an if statement where if a condition is satisfied do x else do y _in conjunction with_ a variable declaration. If `name` exists then it will be stored as `unwrappedName` and useable in the scope of the if statement. (`unwrappedName` can be called anything I usually name it the same name as the variable you are unwrapping.)
+/// I typically prefer to use the next kind of unwrapper: `guard let`. Guard let isn't confined to the scope of the conditional statement but rather enters an else if the variable you are unwrapping is, in fact, nil.
+
+func celebrate(_ occasion: String?) {
+    /// Here is what I meant by the naming style I typically use.   `guard let occasion = occasion`
+    guard let unwrappedOccasion = occasion else {
+        print("Celebrating for no specific occasion!")
+        // DO NOT FORGET TO BREAK OUT OF THE ELSE  (Swift will not let you).
+        return
+    }
+    
+    /// I can now use the unwrapped value that has type `String`
+    print("Happy happy \(unwrappedOccasion)")
+}
+
+/// If you know FOR SURE that something is not nil, you can force unwrap it.
+/// The example used in 100 Days of Swift is a good one.
+
+let strng = "5"
+let num = Int(strng)
+/// Writing Int(var) is called casting, we are casting the string to be an int `num` has the type `Int?` because if strng is something like "hello", that cannot be converted into an Int.
+/// To force unwrap we add an exclamation mark:
+
+let thisIsDefinitelyANumber = Int(strng)!
+
+/// If you force unwrap something and it ends up not having the type you assured the compiler it would have, your app will crash.
+/// You can create a variable using an ! as well in the type that follows the `:` This is called an implicity unwrapped optional.
+
+/// Another option for unwrapping an optional is to use the _nil coalescing operator_. Say you have a function that returns either `String` or `nil`. (I'll use the example from 100 Days of Swift)
+func username(for id: Int) -> String? {
+    if id == 1 {
+        return "Taylor Swift"
+    } else {
+        return nil
+    }
+}
+/// We will call this function while setting a new variable's value, and can use the nil coalescing operator as to say I want to set this new variable equal to the return value of the function or a default value if the function returns nil.
+
+let newUser = username(for: 15) ?? "Anonymous"
+
+/// We have seen `.` notation for calling methods and properties. If something that 
+
