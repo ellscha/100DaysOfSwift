@@ -2,7 +2,7 @@ import UIKit
 
 var str = "Hello, playground"
  
-/// #Day 8
+/// #Day 8: Structs, Properties, Methods
 /// The last thing we did was _Closures_. The next thing we are going to work with is _Structs_!
 /// We have seen types like `String`. `Int`,`Double`... But using structs, we can make our own data-types using a grouping of the primitive datatypes.
 /// For example, we could make a Person type using two Strings and an Int (First name, Last name, and age.)
@@ -100,7 +100,7 @@ fridgeItems.firstIndex(of: "eggs")
 print(fridgeItems.sorted())
 fridgeItems.remove(at: 0)
 
-/// #Day 9
+/// #Day 9: Access Control, Static Properties, Laziness
 
 /// initializers... a method that helps create an instance of the (in this case) struct. Structs by their nature come with an intializer where you have to set the elements, but you can write your own init functions so things are done as you wish. I will use the 100 Days of Swift Example.
 
@@ -179,7 +179,7 @@ struct House {
 
 /// There are private variables, so, naturally there are also public variables which means that information is available from anywhere in a project.
 
-/// #Day 10
+/// #Day 10: Classes, Inheritance
 
 /// Similar to structs, swift has another way of creating your own new data types, they are called `classes`. And you about to get _schooled_.
 /// Classes do something that structs cannot...they can inherit. The way a human inherits features like eye color, hair color, code can also inherit. You could have an Animal class and a Dog class that inherits from Animal ( I wrote that before I read the first lesson, I animals and car are the main examples used when it comes to learning about classes.)
@@ -254,7 +254,7 @@ print("\(clumpyMilk.foodGroup), \(lumpyMilk.foodGroup)")
 
 final class RottingFood {
     var food: String
-    var foodGroup: String
+    let foodGroup: String
     init(food: String, foodGroup: String) {
         self.food = food
         self.foodGroup = foodGroup
@@ -265,4 +265,104 @@ final class RottingFood {
     }
 }
 
-/// Classes don't use the `mutating` keywords like structs do.
+/// Classes don't use the `mutating` keywords like structs do. If a property of a class is declared within the class as a constant (like foodGroup is above) then it can't be changed once it is set, but the food var can be changed without explicitly calling it `mutating`.
+
+/// #Day 11: Protocols, Extensions,  Protocol-Extensions
+/// Protocols are how we define methods or properties something has to have. Like a Person _must_ have a birthday.
+
+//DOB Stands for Date of Birth
+protocol Applicant {
+    var resume: String { get set }
+}
+
+struct Human: Applicant {
+    var resume: String
+    
+}
+
+func reviewResume(resume: Applicant) {
+    print("Begin reviewing applicant's \(resume)")
+}
+
+/// Protocol Inheritance is different from class inheritance because you can inherit from more than one protocol at a time.  Protocols that describe an ability should be named using suffixes like `able`, `ible`, or even `ing`. If it describes what something is, it should be a noun e.g Collection.
+/// Taking the example from 100 Days of Swift
+
+
+protocol Payable {
+    func calculateWages() -> Int
+}
+
+protocol NeedsTraining {
+    func study()
+}
+
+protocol HasVacation {
+    func takeVacation(days: Int)
+}
+
+protocol Employee: Payable, NeedsTraining, HasVacation { }
+
+/// Now when we make a new type that abides by the `Employee` protocol, it must conform to all of the protocols that `Employee` conforms to.
+//struct WorkingPerson: Employee {
+//    func calculateWages() -> Int {
+//        <#code#>
+//    }
+//
+//    func study() {
+//        <#code#>
+//    }
+//
+//    func takeVacation(days: Int) {
+//        <#code#>
+//    }
+//
+//
+//}
+
+/// EXTENSIONS allow you to add methods to existing types. If we wanted to add an extension to our `Car` we could.
+extension Car {
+    enum Gas: String {
+        case Regular = "Regular"
+        case Premium = "Premium"
+        case Diesel = "Diesel"
+    }
+    func fillWith(gas: Gas) {
+        print("Your car has been filled using \(gas)")
+    }
+}
+
+var raceCar: Car = Car.init(make: "Mini", model: "Hatch")
+raceCar.revEngine()
+raceCar.fillWith(gas: Car.Gas.Diesel)
+
+/// Extensions allow you to add code inside of methods. Protocols tell you what methods you must have. Extension Protocols allow you to do both. I'll take again from the Bible that has been leading these two playgrounds: 100 Days of Swift.
+
+/// Note that both Array and Set conform to the Collection protocol.
+
+let pythons = ["Eric", "Graham", "John", "Michael", "Terry", "Terry"]
+let beatles = Set(["John", "Paul", "George", "Ringo"])
+
+extension Collection {
+    func summarize() {
+        print("There are \(count) of us:")
+
+        for name in self {
+            print(name)
+        }
+    }
+}
+/// Since Arrays and Sets conform to the same protocol, we can use the summarize function on both types.
+
+pythons.summarize()
+beatles.summarize()
+
+/// POP! (Protocol Oriented Programming).
+/// So if I have a protocol that has two requirements, a property and a method... if I use that method a lot that means I have to write the function each time with the code inside of it that I want to be executed....Now if it is different code each time....fine but if it's the same thing....use the protocol oriented So with out Employee example above I'll write an example below. I'll write an example first of what it would be like without protocol extensions.
+
+extension HasVacation {
+    func takeVacationDays(days: Int) {
+        print("See you in \(days) days!")
+    }
+}
+
+/// #Day 12: Optionals

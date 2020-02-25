@@ -4,7 +4,7 @@ var str = "Hello, playground"
 
 //100 Days of Swift P1.
 
-/// #Day 1
+/// #Day 1: Variables, Simple Data Types, String Interpolation
 
 ///Definitely a review of things I know, one thing I _did_ learn is that you can write numbers with `_`s in them so that it keeps them clearer.
 ///e.g `var million = 1_000_000` is easier to read than just `var million = 1000000`.
@@ -47,7 +47,7 @@ print("Tomorrow is my birthday and I will be \(age + 1)")
 
 var thisIsDefinitelyAString : String = "I told you so!"
 
-/// #Day 2
+/// #Day 2: Arrays, Dictionaries, Sets, Enumerations
 
 /// Arrays store values as they are entered and order _does_ matter.
 
@@ -133,7 +133,7 @@ enum tournamentStandings: Int {
 var thirdPrize = tournamentStandings(rawValue: 3)
 
 
-/// #Day 3
+/// #Day 3: Operators, Conditions
 /// MATH!!! I was, admittedly, a Mathlete in high school. With that, let's begin.
 /// `+, -, *, / and % ` I will write it out as an enum just so we can review.
 
@@ -267,7 +267,7 @@ default:
     print("You did great!")
 }
 
-/// #Day 4
+/// #Day 4: Loops
 /// Loops!
 /// For loops go item by item in an array or range of numbers where you can do something `for` each value in one code block!
 
@@ -377,7 +377,7 @@ while true {
 
 /// Here is one way to utilize an infinite loop without letting it destroy your progress.
 
-/// #Day 5
+/// #Day 5: Functions, Parameters, Errors
 /// ##Functions!
 /// We use functions to simplify, organize and utilize out code to the max!
 /// Functions make it easy to reuse code which makes code very readable (in most cases but I'm sure there is some rando outlier).
@@ -475,7 +475,7 @@ func makeZero(number: inout Int) {
 
 makeZero(number: &number)
 
-/// #Day 6 & 7
+/// #Day 6 & 7 CLOSURES
 /// Next up: Closures, closures are super important in iOS development wayyyyy later on when dealing with threading and timing and
 /// Long story short, very very important. I never learned them properly so I'm definitely glad that 100 Days of swift dedicates
 /// a couple of lessons to them.
