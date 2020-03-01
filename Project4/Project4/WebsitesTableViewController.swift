@@ -57,14 +57,16 @@ class WebsitesTableViewController: UITableViewController {
                 let textFieldText = alert?.textFields![0].text
                 // Force unwrapping because we know it exists.
                 self.websites.append(textFieldText!)
+                self.tableView.reloadData()
+            } else {
+                let errorAlert = UIAlertController(title: "Oops!", message: "Invalid URL format... you should enter something like: hello.com", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: false)
             }
         }))
 
         // 4. Present the alert.
-        self.present(alert, animated: true, completion: {
-            self.tableView.reloadData()
-        })
-        print(websites.count, [websites])
+        self.present(alert, animated: true, completion: nil)
     }
     
     // To make sure user input is valid url.
