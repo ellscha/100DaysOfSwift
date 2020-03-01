@@ -20,7 +20,8 @@ class DetailViewController: UIViewController {
         
         // Set the page title to the selected image name.
         title = selectedImage
-        
+        // Add a button to the navigation controller
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
         // We set the navigation bar title size in the other view controller but don't want it to be large in this one.
         navigationItem.largeTitleDisplayMode = .never
         
@@ -43,6 +44,20 @@ class DetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         navigationController?.hidesBarsOnTap = false
+    }
+    
+    // Share Tapped function for Activity View Controller
+    @objc func shareTapped() {
+        // Make sure there is a photo (jpeg) that is sendable, otherwise print message.
+        guard let image = imageView.image?.jpegData(compressionQuality: 0.8) else {
+            print("No Image Found")
+            return
+        }
+        
+        // Set up the activity view and its attributes.
+        let viewController = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        viewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(viewController, animated: true)
     }
 
 }
