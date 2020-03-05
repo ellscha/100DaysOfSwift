@@ -89,6 +89,18 @@ arrayABC = {a, b, c};
 // We could also not define a size and create an array like this:
 
 float floatingArray [] = {0.0, 1.0, 2.0, 3.0, 4.0};
+
+// A constant array (a swift let equivalent) looks like the following:
+NSArray *recordTempsInFar = @[@90, @85, @97];
+// Notice the `@` symbol that comes before objects.
+
+// Making an array Mutable means it is changeable.
+NSMutableArray *array = [NSMutableArray new];
+[array addObject: floatingArray];
+// TODO: Check.
+// Another collection type is a Dictionary
+NSDictionary *abcGreekokay = @{ @"A": @"Alpha", @"B": @:"Beta", @"C": @"Gamma" };
+
 // We could log the first element in the array like this:
 NSLog(@"The first element in the array is %f", floatingArray[0]);
 /* Operators:
