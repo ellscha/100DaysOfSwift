@@ -18,6 +18,9 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add in button for game play functionality that calls promptForAnswer
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
+
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             // Try ? and return nil if there is an area.
             if let startWords = try? String(contentsOf: startWordsURL) {
@@ -56,5 +59,22 @@ class ViewController: UITableViewController {
         return cell
     }
 
+    // A UIAlert with a text field for user input of answers
+    @objc func promptForAnswer() {
+        let ac = UIAlertController(title: "Enter answer", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        
+        let submitAction = UIAlertAction(title: "Submit", style: .default) {_ in
+            guard let answer = ac.textFields?[0].text else { return }
+            self.submit(answer)
+        }
+        
+        ac.addAction(submitAction)
+        present(ac, animated: true)
+    }
+    
+    // This allows the call to submit to run.
+   func submit(_ answer: String) {
+    }
 }
 
